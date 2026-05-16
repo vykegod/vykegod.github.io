@@ -5,7 +5,8 @@ import ToDo from './Task';
 import axios from 'axios';
 
 const TASKS_STORAGE_KEY = 'tasks-list-project-web';
-const weatherApiKey = 'c7616da4b68205c2f3ae73df2c31d177';
+
+const weatherApiKey = '1bd2708c42ef49ad8d862712261605';
 
 function App() {
   const [todos, setTodos] = useState(() => {
@@ -40,7 +41,7 @@ function App() {
             const lon = position.coords.longitude;
 
             const weather = await axios.get(
-              `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${weatherApiKey}`
+              `https://api.weatherapi.com/v1/current.json?key=${weatherApiKey}&q=${lat},${lon}&lang=ru`
             );
 
             setWeatherData(weather.data);
@@ -75,9 +76,7 @@ function App() {
   const toggleTask = (id) => {
     setTodos(
       todos.map((todo) =>
-        todo.id === id
-          ? { ...todo, complete: !todo.complete }
-          : todo
+        todo.id === id ? { ...todo, complete: !todo.complete } : todo
       )
     );
   };
@@ -86,18 +85,15 @@ function App() {
     <div className="App">
       <h1 className="list-header">Список задач: {todos.length}</h1>
 
-      <div>
-        <p>USD: {rates.USD}</p>
-        <p>EUR: {rates.EUR}</p>
-      </div>
+      <p>USD: {rates.USD}</p>
+      <p>EUR: {rates.EUR}</p>
 
       {weatherData ? (
         <div>
-          <p>
-            Температура: {(weatherData.main.temp - 273.15).toFixed(1)}°C
-          </p>
-          <p>Ветер: {weatherData.wind.speed} м/с</p>
-          <p>Облачность: {weatherData.clouds.all}%</p>
+          <p>Температура: {weatherData.current.temp_c}°C</p>
+          <p>Ветер: {weatherData.current.wind_kph} км/ч</p>
+          <p>Облачность: {weatherData.current.cloud}%</p>
+          <p>Погода: {weatherData.current.condition.text}</p>
         </div>
       ) : (
         <p>Загрузка погоды...</p>
@@ -107,10 +103,10 @@ function App() {
 
       {todos.map((todo) => (
         <ToDo
-          todo={todo}
           key={todo.id}
-          removeTask={removeTask}
+          todo={todo}
           toggleTask={toggleTask}
+          removeTask={removeTask}
         />
       ))}
     </div>
