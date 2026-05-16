@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const TASKS_STORAGE_KEY = 'tasks-list-project-web';
 
+// Ключ от WeatherAPI.com
 const weatherApiKey = '1bd2708c42ef49ad8d862712261605';
 
 function App() {
@@ -22,9 +23,8 @@ function App() {
   }, [todos]);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchRates() {
       try {
-        // Валюта
         const currency = await axios.get(
           'https://www.cbr-xml-daily.ru/daily_json.js'
         );
@@ -33,10 +33,15 @@ function App() {
         const EUR = currency.data.Valute.EUR.Value.toFixed(2);
 
         setRates({ USD, EUR });
+      } catch (error) {
+        console.error('Ошибка загрузки валют:', error);
+      }
+    }
 
-        // Погода
-        navigator.geolocation.getCurrentPosition(
-          async (position) => {
+    function fetchWeather() {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          try {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
 
@@ -45,21 +50,24 @@ function App() {
             );
 
             setWeatherData(weather.data);
-          },
-          (error) => {
-            console.error('Ошибка геолокации:', error);
-            alert('Разреши доступ к геолокации');
+          } catch (error) {
+            console.error('Ошибка загрузки погоды:', error);
           }
-        );
-      } catch (error) {
-        console.error('Ошибка загрузки данных', error);
-      }
+        },
+        (error) => {
+          console.error('Ошибка геолокации:', error);
+          alert('Разреши доступ к геолокации, чтобы увидеть погоду');
+        }
+      );
     }
 
-    fetchData();
+    fetchRates();
+    fetchWeather();
   }, []);
 
   const addTask = (userInput) => {
+    if (!userInput.trim()) return;
+
     const newItem = {
       id: Math.random().toString(36).substring(2, 9),
       task: userInput,
@@ -90,6 +98,7 @@ function App() {
 
       {weatherData ? (
         <div>
+          <p>Город: {weatherData.location.name}</p>
           <p>Температура: {weatherData.current.temp_c}°C</p>
           <p>Ветер: {weatherData.current.wind_kph} км/ч</p>
           <p>Облачность: {weatherData.current.cloud}%</p>
