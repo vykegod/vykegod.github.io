@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap');
+
 * {
   font-family: 'Montserrat', sans-serif;
   font-weight: 900;
@@ -18,39 +20,81 @@ body {
 
 .list-header {
   font-size: 48px;
+  font-weight: 900;
   text-transform: uppercase;
   border: 4px solid white;
   display: inline-block;
   padding: 10px 30px;
   box-shadow: 6px 6px 0 red;
-  margin-bottom: 30px;
+  margin: 0 0 35px;
+  max-width: 100%;
+  line-height: 1.15;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
-.App > div,
-.App > p {
-  margin: 20px auto;
+.api-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin: 0 auto 35px;
+}
+
+.info-block {
   padding: 15px 25px;
-  width: fit-content;
   border: 3px solid white;
   box-shadow: 5px 5px 0 red;
   background: #050505;
+}
+
+.info-block h2 {
+  margin: 0 0 15px;
+  font-size: 22px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.info-block p {
+  margin: 5px 0;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.currency-block {
+  width: 230px;
+}
+
+.weather-block {
+  width: 300px;
+}
+
+.country-block {
+  width: 420px;
 }
 
 form {
   margin: 30px auto;
   display: flex;
   justify-content: center;
-  max-width: 600px;
+  max-width: 700px;
 }
 
 input {
   width: 70%;
   padding: 14px;
   font-size: 18px;
+  font-weight: 900;
   border: 3px solid white;
   background: black;
   color: white;
   outline: none;
+}
+
+input::placeholder {
+  color: #9a9a9a;
+  opacity: 1;
 }
 
 button {
@@ -60,10 +104,55 @@ button {
   border: 3px solid white;
   cursor: pointer;
   text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 900;
 }
 
 button:hover {
   background: white;
+  color: red;
+}
+
+.country-form {
+  margin: 15px auto;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+}
+
+.country-form input {
+  width: 68%;
+  font-size: 15px;
+  padding: 12px;
+}
+
+.country-form button {
+  width: 32%;
+  font-size: 14px;
+  padding: 12px 8px;
+}
+
+.country-result {
+  margin-top: 15px;
+  text-align: left;
+}
+
+.country-result p {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.country-flag {
+  display: block;
+  width: 160px;
+  max-width: 100%;
+  margin: 15px auto;
+  border: 3px solid white;
+  box-shadow: 5px 5px 0 red;
+}
+
+.error-text {
   color: red;
 }
 
@@ -72,18 +161,27 @@ button:hover {
   justify-content: space-between;
   align-items: center;
   gap: 15px;
-  max-width: 600px;
+  max-width: 700px;
+  width: 100%;
   margin: 15px auto;
   padding: 15px;
   border: 3px solid white;
   background: black;
   box-shadow: 5px 5px 0 red;
+  overflow: hidden;
 }
 
 .item-text {
   flex: 1;
   text-align: left;
   cursor: pointer;
+  min-width: 0;
+  max-width: 100%;
+  font-size: 18px;
+  font-weight: 900;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: normal;
 }
 
 .item-delete {
@@ -92,10 +190,12 @@ button:hover {
   color: white;
   padding: 5px 10px;
   cursor: pointer;
+  width: auto;
 }
 
 .item-delete:hover {
   background: red;
+  color: white;
 }
 
 .strike {
@@ -103,68 +203,16 @@ button:hover {
   opacity: 0.6;
 }
 
-.list-header {
-  font-family: 'Montserrat', sans-serif !important;
-  font-weight: 900;
-}
-
-.item-todo {
-  max-width: 600px;
-  width: 100%;
-  overflow: hidden;
-}
-
-.item-text {
-  min-width: 0;
-  max-width: 100%;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  white-space: normal;
-}
-
-.list-header {
-  max-width: 100%;
-  line-height: 1.15;
-  white-space: normal;
-  overflow-wrap: anywhere;
-}
-
-@media (max-width: 600px) {
-  .App {
-    padding: 20px 10px;
+@media (max-width: 900px) {
+  .api-row {
+    gap: 20px;
   }
 
-  .list-header {
-    font-size: 28px;
-    padding: 8px 12px;
-    line-height: 1.2;
-    box-shadow: 4px 4px 0 red;
-  }
-
-  .App > div,
-  .App > p {
+  .currency-block,
+  .weather-block,
+  .country-block {
     width: 100%;
-    max-width: 100%;
-    padding: 12px;
-    overflow-wrap: anywhere;
-  }
-
-  form {
-    max-width: 100%;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  input {
-    width: 100%;
-  }
-
-  button {
-    width: 100%;
-  }
-
-  .item-todo {
-    max-width: 100%;
+    max-width: 500px;
   }
 }
 
@@ -173,50 +221,78 @@ button:hover {
     width: 100%;
     max-width: 100vw;
     padding: 15px 10px;
-    box-sizing: border-box;
     overflow-x: hidden;
+  }
+
+  .list-header {
+    font-size: 28px;
+    padding: 8px 12px;
+    line-height: 1.2;
+    box-shadow: 4px 4px 0 red;
+    margin-bottom: 25px;
+  }
+
+  .api-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 25px;
+  }
+
+  .info-block {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px;
+    overflow-wrap: anywhere;
+  }
+
+  .info-block h2 {
+    font-size: 20px;
   }
 
   form {
     width: 100%;
     max-width: 100%;
-    box-sizing: border-box;
+    flex-direction: column;
+    gap: 10px;
   }
 
   input {
     width: 100%;
     max-width: 100%;
-    box-sizing: border-box;
   }
 
   button {
     width: 100%;
     max-width: 100%;
-    box-sizing: border-box;
+  }
+
+  .country-form {
+    flex-direction: row;
+    gap: 0;
+  }
+
+  .country-form input {
+    width: 65%;
+  }
+
+  .country-form button {
+    width: 35%;
+  }
+
+  .country-flag {
+    width: 150px;
   }
 
   .item-todo {
     width: 100%;
     max-width: 100%;
-    box-sizing: border-box;
-    overflow: hidden;
     flex-direction: column;
     align-items: stretch;
     gap: 10px;
   }
 
-  .item-text {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    overflow-wrap: anywhere;
-    word-break: break-word;
-    white-space: normal;
-  }
-
   .item-delete {
     width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
   }
 }
